@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>床位狀態管理</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .bed {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .available {
+            background-color: #d4edda;
+        }
+        .unavailable {
+            background-color: #f8d7da;
+        }
+        button {
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>床位狀態管理</h1>
+    <div id="beds-container"></div>
+
+    <script>
+        const beds = [
+            { id: 1, status: 'available' },
+            { id: 2, status: 'available' },
+            { id: 3, status: 'unavailable' },
+            { id: 4, status: 'available' },
+        ];
+
+        const container = document.getElementById('beds-container');
+
+        function renderBeds() {
+            container.innerHTML = '';
+            beds.forEach((bed) => {
+                const bedDiv = document.createElement('div');
+                bedDiv.className = `bed ${bed.status}`;
+                bedDiv.innerHTML = `
+                    <span>床位 ${bed.id}: ${bed.status === 'available' ? '可使用' : '不可使用'}</span>
+                    <button onclick="toggleBedStatus(${bed.id})">切換狀態</button>
+                `;
+                container.appendChild(bedDiv);
+            });
+        }
+
+        function toggleBedStatus(bedId) {
+            const bed = beds.find(b => b.id === bedId);
+            if (bed) {
+                bed.status = bed.status === 'available' ? 'unavailable' : 'available';
+                renderBeds();
+            }
+        }
+
+        renderBeds();
+    </script>
+</body>
+</html>
